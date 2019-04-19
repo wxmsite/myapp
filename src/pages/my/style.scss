@@ -1,55 +1,49 @@
 .top {
   display: flex;
   position: relative;
-  top: 0;
-  left: 0;
+  top: 60rpx;
   justify-content: space-around;
   align-items: flex-start;
-  background-color: #333;
+  flex-direction: column;
 
-  .organ-name {
-    flex: 1 1 auto;
-    font-size: 38rpx !important;
-    font-family: PingFangSC-Medium;
-    color: #fff;
-    margin-left: 30rpx;
-  }
   .avatar {
-    flex: 0 0 120rpx;
-    text-align: right;
-    margin-right: 30rpx;
-    .avavtao-img {
+    display: inline-block;
+    margin: 0 auto;
+    .avatar-img {
       display: inline-block;
-      width: 148rpx;
-      height: 148rpx;
+      width: 132rpx;
+      height: 132rpx;
       overflow: hidden;
       border-radius: 10rpx;
     }
   }
+  .nickname {
+    margin: 0 auto;
+    display: inline-block;
+    .nickname-text {
+      text-align: center;
+      font-size: 38rpx !important;
+      font-family: PingFangSC-Medium;
+      color: #181616;
+    }
+  }
 
   .btn {
-    color: #fff;
-    background: #373737;
-    margin: 10px 0 20px;
+    background: none !important;
+    color: #181616 !important;
   }
-  .login-text {
-    line-height: 2;
-    font-size: 12px;
-    color: #777777;
-    text-decoration: none;
-    text-align: center;
+  .btn::after {
+    border: none;
   }
 }
 .menu {
   position: relative;
-  left: 0;
-  top: 0;
+  top: 30rpx;
   box-sizing: border-box;
   padding: 0 30rpx;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   margin: 50rpx 30rpx;
   border-radius: 20rpx;
@@ -62,21 +56,18 @@
     height: 100rpx;
     text-align: left;
     font-size: 30rpx;
-    align-items: center;
-    justify-content: space-between;
-
-    // font-family:PingFangSC-Regular;
     color: #1a1a1a;
+    border-bottom: 2rpx solid #e1e1e1;
     .menu_item_icon {
       display: inline-block;
       width: 36rpx;
       height: 36rpx;
-      padding-right: 24rpx;
     }
     .menu_item_content {
-      float: right;
-      font-size: 38rpx;
-      color: rgb(231, 33, 43);
+      margin-left: 24rpx;
+      float: left;
+      font-size: 28rpx;
+      color: #181616;
     }
   }
 }
@@ -86,5 +77,4 @@
   background-color: rgb(240, 16, 16);
   width: 100%;
   padding: 30rpx;
-  padding: 0 30rpx;
 }
