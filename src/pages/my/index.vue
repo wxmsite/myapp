@@ -18,28 +18,47 @@
     </view>
 
     <view class="menu">
-      <view class="menu_item" @click="uploadFile">
+      <view class="menu-item" @click="uploadFile">
         <view>
-          <img class="menu_item_icon" src="../../../static/images/upload-file.svg">
+          <img class="menu-item-icon" src="../../../static/images/upload-file.svg">
         </view>
-        <span class="menu_item_content">上传文件</span>
+        <span class="menu-item-content">上传文件</span>
       </view>
-      <view class="menu_item">
-        <view class="menu_item_icon">
-          <img class="menu_item_icon" src="../../../static/images/explanation.svg">
-        </view>
-        <span class="menu_item_content">一些说明</span>
+      <view class="modal">
+        <modal :hidden="hiddenmodalput" title="请输入文件名" @confirm="confirm" @cancel="cancel">
+          <view>
+            <input class="bookName" type="text" bindinput="bookName">
+          </view>
+        </modal>
       </view>
-      <view class="menu_item">
-        <view class="menu_item_icon">
-          <img class="menu_item_icon" src="../../../static/images/feedback.svg">
+      <view class="menu-item" @click="collection">
+        <view class="menu-item-icon">
+          <img class="menu-item-icon" src="../../../static/images/collect.svg">
         </view>
-        <span class="menu_item_content">意见反馈</span>
+        <span class="menu-item-content">我的收藏</span>
+      </view>
+      <view class="menu-item" @click="explanation">
+        <view class="menu-item-icon">
+          <img class="menu-item-icon" src="../../../static/images/explanation.svg">
+        </view>
+        <span class="menu-item-content">功能说明</span>
+      </view>
+      <view class="menu-item" @click="problem">
+        <view class="menu-item-icon">
+          <img class="menu-item-icon" src="../../../static/images/problem.svg">
+        </view>
+        <span class="menu-item-content">待解决问题</span>
+      </view>
+      <view class="menu-item" @click="feedback">
+        <view class="menu-item-icon">
+          <img class="menu-item-icon" src="../../../static/images/feedback.svg">
+        </view>
+        <span class="menu-item-content">意见反馈</span>
       </view>
     </view>
-    <!-- <view>
+    <view>
       <button class @click="logout">退出登录</button>
-    </view>-->
+    </view>
   </view>
 </template>
 
@@ -51,11 +70,14 @@ export default {
   components: {
     card
   },
+
   data() {
     return {
-      userInfo: "",
+      hiddenmodalput: true,
+      bookName: "",
+      nickName: "",
       status: false,
-      isPassword: true,
+
       logs: [],
       form: {
         account: "",
@@ -64,25 +86,45 @@ export default {
     };
   },
   methods: {
-    uploadFile() {
+    cancel() {
+      this.hiddenmodalput = true;
+      console.log(this.hiddenmodalput);
+    },
+    confirm() {
+      console.log("bookName" + this.bookName);
+      //此处需要声明一个局部变量，不然author那里传不进去
+      var nickName = this.nickName;
       wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ["original"], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ["album"], // 可以指定来源是相册还是相机，默认二者都有
+        count: 1,
+        // sizeType: ["original"],
+        sourceType: ["album"],
         success: function(res) {
-          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           var filePath = res.tempFilePaths[0];
           wx.showLoading({
             title: "上传中"
           });
           console.log(filePath);
-          const cloudPath =filePath.match(/\.[^.]+.png/)[0];
+          const cloudPath = filePath.match(/\.[^.]+(.png|.jpg)/)[0];
           console.log(cloudPath);
           wx.cloud.init();
           wx.cloud.uploadFile({
             cloudPath,
             filePath,
             success: res => {
+              wx.cloud.callFunction({
+                name: "setInfo",
+                data: {
+                  author: nickName,
+                  bookName: "test",
+                  imgName: cloudPath
+                },
+                success: function(res) {
+                  console.log(res);
+                },
+                fail: function(res) {
+                  console.log(res);
+                }
+              });
               console.log("[上传文件] 成功：", res);
 
               app.globalData.fileID = res.fileID;
@@ -96,8 +138,10 @@ export default {
               });
 
               console.log(that.data);
-              wx.navigateTo({
-                url: "../storageConsole/storageConsole"
+              wx.showToast({
+                title: "成功",
+                icon: "success",
+                duration: 2000
               });
             },
             fail: e => {
@@ -117,15 +161,46 @@ export default {
         }
       });
     },
+
+    bookName: function(e) {
+      this.setData({
+        bookName: e.detail.value
+      });
+    },
+
+    uploadFile() {
+      //弹出modal，输入文件名
+      this.hiddenmodalput = false;
+    },
+    collection() {
+      wx.showToast({
+        title: "计划中",
+        icon: "success",
+        duration: 1000
+      });
+    },
+    explanation() {
+      wx.navigateTo({
+        url: "../explanation/main"
+      });
+    },
+    problem() {
+      wx.navigateTo({
+        url: "../problem/main"
+      });
+    },
+    feedback() {
+      wx.showToast({
+        title: "计划中",
+        icon: "success",
+        duration: 1000
+      });
+    },
     logout() {
       console.log("------>logout");
       try {
         wx.removeStorageSync("userInfo");
       } catch (e) {
-        // Do something when catch error
-        wx.switchTab({
-          url: "../tabBar/course/main"
-        });
         console.log(e);
       }
       this.status = false;
@@ -133,20 +208,15 @@ export default {
     onGotUserInfo(e) {
       console.log("------>login");
       wx.setStorageSync("userInfo", e.mp.detail.userInfo);
-      wx.switchTab({
-        url: "../tabBar/index/main"
-      });
+      this.nickName = wx.getStorageSync("userInfo").nickName;
       this.status = true;
+      console.log(this.nickName);
     }
   },
   onShow() {
     console.log("------>login show");
-
-    if (wx.getStorageSync("access_token")) {
-      wx.switchTab({
-        url: "../tabBar/course/main"
-      });
-    } else {
+    if (wx.getStorageSync("userInfo")) {
+      this.nickName = wx.getStorageSync("userInfo").nickName;
       this.status = true;
     }
   },
@@ -161,21 +231,6 @@ export default {
   onUnload() {
     console.log("onupload");
     this.status = false;
-  },
-  onShareAppMessage: function(res) {
-    if (res.from === "button") {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: "meedu",
-      path: "pages/login/main"
-    };
-  },
-  _getUserInfo(data) {
-    this.$http.user.getUserInfo().then(res => {
-      this.userInfo = res.data;
-    });
   }
 };
 </script>

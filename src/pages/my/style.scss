@@ -5,7 +5,6 @@
   justify-content: space-around;
   align-items: flex-start;
   flex-direction: column;
-
   .avatar {
     display: inline-block;
     margin: 0 auto;
@@ -51,23 +50,33 @@
   background-color: #fff;
   box-shadow: 0rpx 40rpx 100rpx 0rpx rgba(0, 0, 0, 0.07);
 
-  .menu_item {
+  .menu-item {
     display: flex;
     height: 100rpx;
     text-align: left;
     font-size: 30rpx;
     color: #1a1a1a;
+    align-items: center;
     border-bottom: 2rpx solid #e1e1e1;
-    .menu_item_icon {
+    .menu-item-icon {
       display: inline-block;
       width: 36rpx;
       height: 36rpx;
     }
-    .menu_item_content {
+    .menu-item-content {
       margin-left: 24rpx;
       float: left;
       font-size: 28rpx;
       color: #181616;
+    }
+  }
+  .modal {
+    display: flex;
+    .bookName {
+      border: 1px solid #ccc;
+      padding: 7px 0px;
+      border-radius: 3px;
+      padding-left: 5px;
     }
   }
 }

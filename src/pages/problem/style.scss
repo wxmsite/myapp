@@ -1,0 +1,31 @@
+.problem {
+  display: flex;
+  flex-direction: column;
+  .applet {
+    display: flex;
+    position: relative;
+    top: 60rpx;
+    align-items: flex-start;
+    margin: 0 auto;
+    justify-content: center;
+    .applet-code {
+      display: inline-block;
+      width: 132rpx;
+      height: 132rpx;
+      overflow: hidden;
+      border-radius: 10rpx;
+    }
+  }
+
+  .content {
+    display: flex;
+    position: relative;
+    top: 60rpx;
+    align-items: center;
+    height: 100rpx;
+    text-align: left;
+    font-size: 24rpx;
+    color: #1a1a1a;
+    align-items: center;
+  }
+}
