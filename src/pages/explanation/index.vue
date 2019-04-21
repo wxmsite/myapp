@@ -1,5 +1,5 @@
 <template>
-  <view>test</view>
+  <view>mindmap</view>
 </template>
 <style lang='scss' scoped>
 @import "./style";

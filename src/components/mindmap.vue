@@ -1,20 +1,23 @@
 <template>
-  <view class="mindmap-card" @click="getBook">
+  <view class="mindmap" @click="getBook">
     <view class="card-thum">
-      <img src="../../static/images/avatar.png">
+      <img src="../../static/images/like.svg">
     </view>
     <view class="card-name">
-      <view class="title">人类简史</view>
-      <view class="author">啦啦啦</view>
+      <view class="title">{{book.title}}</view>
+      <view class="author">{{book.author}}</view>
       <view class="features">
         <view>
-          <img src="../../static/images/like.svg">
+          <img class="img" src="../../static/images/like.svg">
         </view>
         <view>
-          <img src="../../static/images/dislike.svg">
+          <img class="img" src="../../static/images/dislike.svg">
         </view>
         <view>
-          <img src="../../static/images/collect.svg">
+          <img class="img" src="../../static/images/collect.svg">
+        </view>
+        <view>
+          <img class="img" src="../../static/images/download.svg">
         </view>
       </view>
     </view>
@@ -22,28 +25,61 @@
 </template>
 <script>
 export default {
+  props: {
+    book: {
+      type: String,
+      default() {
+        return {};
+      }
+    }
+  },
   methods: {
     getBook() {}
   }
 };
 </script>
 <style lang="less">
-.mindmap-card {
+.mindmap {
   display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(240, 230, 230);
   .card-thum {
+    display: flex;
+    align-items: center;
+    width: 120rpx;
+    height: 120px;
+    margin-left: 20rpx;
   }
   .card-name {
+    display: flex;
+    flex: 1;
+    padding-left: 40rpx;
     flex-direction: column;
+    justify-content: space-between;
+
     .title {
+      font-size: 16px;
     }
     .author {
+      font-size: 12px;
+      color: rgb(117, 104, 104);
     }
     .features {
+      display: flex;
       flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
+      margin-bottom: 10px;
+      justify-content: flex-end;
+      margin-right: 40rpx;
+      .img {
+        width: 40rpx;
+        height: 40rpx;
+        display: inline-block;
+        padding-left: 20rpx;
+      }
     }
   }
 }
 </style>
+
 

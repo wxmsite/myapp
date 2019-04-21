@@ -27,7 +27,7 @@
       <view class="modal">
         <modal :hidden="hiddenmodalput" title="请输入文件名" @confirm="confirm" @cancel="cancel">
           <view>
-            <input class="bookName" type="text" bindinput="bookName">
+            <input class="bookName" v-model="bookName" type="text" @input="getbookName">
           </view>
         </modal>
       </view>
@@ -86,17 +86,23 @@ export default {
     };
   },
   methods: {
+    getbookName(e) {
+      this.bookName = e.target.value;
+    },
     cancel() {
       this.hiddenmodalput = true;
       console.log(this.hiddenmodalput);
     },
     confirm() {
+      this.hiddenmodalput = true;
+
       console.log("bookName" + this.bookName);
       //此处需要声明一个局部变量，不然author那里传不进去
       var nickName = this.nickName;
+      var bookName = this.bookName;
       wx.chooseImage({
         count: 1,
-        // sizeType: ["original"],
+        sizeType: ["original"],
         sourceType: ["album"],
         success: function(res) {
           var filePath = res.tempFilePaths[0];
@@ -115,7 +121,7 @@ export default {
                 name: "setInfo",
                 data: {
                   author: nickName,
-                  bookName: "test",
+                  bookName: bookName,
                   imgName: cloudPath
                 },
                 success: function(res) {
@@ -125,6 +131,7 @@ export default {
                   console.log(res);
                 }
               });
+
               console.log("[上传文件] 成功：", res);
 
               app.globalData.fileID = res.fileID;
@@ -160,6 +167,7 @@ export default {
           console.error(e);
         }
       });
+      this.bookName = "";
     },
 
     bookName: function(e) {
@@ -180,8 +188,13 @@ export default {
       });
     },
     explanation() {
-      wx.navigateTo({
+      /*  wx.navigateTo({
         url: "../explanation/main"
+      }); */
+      wx.showToast({
+        title: "待实现",
+        icon: "success",
+        duration: 1000
       });
     },
     problem() {
