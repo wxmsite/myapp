@@ -6,6 +6,7 @@
     </view>
   </view>
 </template>
+
 <script>
 import mindmap from "@/components/mindmap.vue";
 export default {
@@ -14,17 +15,10 @@ export default {
   },
   data() {
     return {
-      mindmapList: [
-        { author: "123", title: "book1" },
-        { author: "234", title: "book2" },
-        { author: "345", title: "book3" }
-      ]
+      mindmapList: []
     };
   },
   methods: {
-    init() {
-      getMindingMapList();
-    },
     search() {
       wx.showToast({
         title: "待实现",
@@ -32,7 +26,24 @@ export default {
         duration: 1000
       });
     },
-    getMindingMapList() {}
+    //get mindmapList on main page
+    getMindingMapList() {
+      wx.cloud.init();
+      wx.cloud.callFunction({
+        name: "getBookList",
+        complete: res => {
+          this.mindmapList.splice(0);
+          this.mindmapList.push({
+            author: res.result.data[0].author,
+            title: res.result.data[0].bookName,
+            imgName: res.result.data[0].imgName
+          });
+        }
+      });
+    }
+  },
+  onShow() {
+    this.getMindingMapList();
   }
 };
 </script>

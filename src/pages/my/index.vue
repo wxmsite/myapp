@@ -95,7 +95,6 @@ export default {
     },
     confirm() {
       this.hiddenmodalput = true;
-
       console.log("bookName" + this.bookName);
       //此处需要声明一个局部变量，不然author那里传不进去
       var nickName = this.nickName;
@@ -232,18 +231,6 @@ export default {
       this.nickName = wx.getStorageSync("userInfo").nickName;
       this.status = true;
     }
-  },
-
-  onReady() {
-    console.log("------>login ready");
-  },
-  OnHide() {
-    console.log("onhide");
-    this.status = false;
-  },
-  onUnload() {
-    console.log("onupload");
-    this.status = false;
   }
 };
 </script>

@@ -16,7 +16,7 @@
         <view>
           <img class="img" src="../../static/images/collect.svg">
         </view>
-        <view>
+        <view @click="download">
           <img class="img" src="../../static/images/download.svg">
         </view>
       </view>
@@ -34,7 +34,37 @@ export default {
     }
   },
   methods: {
-    getBook() {}
+    getBook() {},
+    download() {
+      wx.downloadFile({
+        url:
+          "https://6d79-myapp-046e4f-1259071453.tcb.qcloud.la/" +
+          this.book.imgName,
+        success: function(res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          if (res.statusCode === 200) {
+            var tempFilePaths = res.tempFilePath;
+            wx.saveImageToPhotosAlbum({
+              filePath: tempFilePaths,
+              success(res) {
+                wx.showToast({
+                  title: "保存成功",
+                  icon: "success",
+                  duration: 2000
+                });
+              },
+              fail(res) {
+                wx.showToast({
+                  title: "保存失败",
+                  icon: "success",
+                  duration: 2000
+                });
+              }
+            });
+          }
+        }
+      });
+    }
   }
 };
 </script>
