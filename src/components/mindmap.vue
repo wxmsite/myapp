@@ -7,10 +7,10 @@
       <view class="title">{{book.title}}</view>
       <view class="author">{{book.author}}</view>
       <view class="features">
-        <view>
+        <view @click="like">
           <img class="img" src="../../static/images/like.svg">
         </view>
-        <view>
+        <view @click="dislike">
           <img class="img" src="../../static/images/dislike.svg">
         </view>
         <view>
@@ -64,7 +64,11 @@ export default {
           }
         }
       });
-    }
+    },
+    like() {
+      
+    },
+    dislike() {}
   }
 };
 </script>

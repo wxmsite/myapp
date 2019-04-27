@@ -13,7 +13,7 @@
         </button>
       </view>
       <view v-else class="nickname">
-        <button class="btn" open-type="getUserInfo" @getuserinfo="onGotUserInfo">微信登录</button>
+        <button class="btn" open-type="getUserInfo" @getuserinfo="onGotUserInfo">点击登录</button>
       </view>
     </view>
 
@@ -95,7 +95,6 @@ export default {
     },
     confirm() {
       this.hiddenmodalput = true;
-      console.log("bookName" + this.bookName);
       //此处需要声明一个局部变量，不然author那里传不进去
       var nickName = this.nickName;
       var bookName = this.bookName;
@@ -108,9 +107,9 @@ export default {
           wx.showLoading({
             title: "上传中"
           });
-          console.log(filePath);
-          const cloudPath = filePath.match(/\.[^.]+(.png|.jpg)/)[0];
-          console.log(cloudPath);
+          console.log("filepath:" + filePath);
+
+          const cloudPath = bookName;
           wx.cloud.init();
           wx.cloud.uploadFile({
             cloudPath,
@@ -121,7 +120,9 @@ export default {
                 data: {
                   author: nickName,
                   bookName: bookName,
-                  imgName: cloudPath
+                  imgName: cloudPath,
+                  like: 0,
+                  dislike: 0
                 },
                 success: function(res) {
                   console.log(res);

@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       problemList: [
-        { value: "登陆时闪烁" },
+        { value: "登陆时闪烁/未能点击头像登录" },
         { value: "首页缩略图问题" },
         { value: "更多功能待开发" },
         { value: "界面UI待优化" }
