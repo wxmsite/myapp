@@ -36,6 +36,8 @@ export default {
   methods: {
     getBook() {},
     download() {
+      console.log("https://6d79-myapp-046e4f-1259071453.tcb.qcloud.la/" +
+          this.book.imgName)
       wx.downloadFile({
         url:
           "https://6d79-myapp-046e4f-1259071453.tcb.qcloud.la/" +
@@ -66,9 +68,43 @@ export default {
       });
     },
     like() {
-      
+      wx.cloud.init();
+      console.log(this.book.id);
+      wx.cloud.callFunction({
+        name: "updatelike",
+        data: {
+          id: this.book.id
+        },
+
+        complete: res => {
+          console.log(res);
+          wx.showToast({
+            title: "success",
+            icon: "success",
+            duration: 1000
+          });
+        }
+      });
     },
-    dislike() {}
+    dislike() {
+      wx.cloud.init();
+      console.log(this.book.id);
+      wx.cloud.callFunction({
+        name: "updatedislike",
+        data: {
+          id: this.book.id
+        },
+
+        complete: res => {
+          console.log(res);
+          wx.showToast({
+            title: "success",
+            icon: "success",
+            duration: 1000
+          });
+        }
+      });
+    }
   }
 };
 </script>

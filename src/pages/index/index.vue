@@ -33,16 +33,20 @@ export default {
         name: "getBookList",
         complete: res => {
           this.mindmapList.splice(0);
-          this.mindmapList.push({
-            author: res.result.data[0].author,
-            title: res.result.data[0].bookName,
-            imgName: res.result.data[0].imgName
-          });
+          for (var l = 0; l < res.result.data.length; l++) {
+            this.mindmapList.push({
+              author: res.result.data[l].author,
+              title: res.result.data[l].bookName,
+              imgName: res.result.data[l].imgName,
+              id: res.result.data[l]._id
+            });
+          }
         }
       });
     }
   },
   onShow() {
+    console.log("index show ");
     this.getMindingMapList();
   }
 };

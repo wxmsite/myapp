@@ -5,7 +5,9 @@
         <open-data class="avatar-img" type="userAvatarUrl"></open-data>
       </view>
       <view v-else class="avatar">
-        <img class="avatar-img" src="../../../static/images/avatar.png">
+        <button open-type="getUserInfo" @getuserinfo="onGotUserInfo" class="btn">
+          <img class="avatar-img" src="../../../static/images/avatar.png">
+        </button>
       </view>
       <view v-if="status" class="nickname">
         <button class="btn">
@@ -13,7 +15,7 @@
         </button>
       </view>
       <view v-else class="nickname">
-        <button class="btn" open-type="getUserInfo" @getuserinfo="onGotUserInfo">点击登录</button>
+        <view>点击登录</view>
       </view>
     </view>
 
@@ -108,8 +110,15 @@ export default {
             title: "上传中"
           });
           console.log("filepath:" + filePath);
-
-          const cloudPath = bookName;
+          var type;
+          var path = filePath.split("").reverse();
+          for (var i = 0; i < path.length; i++) {
+            if (path[i] == ".") {
+              type = filePath.slice(-1 - i);
+              break;
+            }
+          }
+          const cloudPath = bookName + type;
           wx.cloud.init();
           wx.cloud.uploadFile({
             cloudPath,
