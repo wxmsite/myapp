@@ -1,6 +1,6 @@
 <template>
   <view class="minding">
-    <view class="search" @click="search">输入书籍</view>
+    <view class="search" @click="search">搜索</view>
     <view class="content">
       <mindmap v-for="(item,index) in mindmapList" :key="index" :book="item"></mindmap>
     </view>
@@ -15,16 +15,16 @@ export default {
   },
   data() {
     return {
-      mindmapList: []
+      mindmapList: [],
+    
     };
   },
   methods: {
     search() {
-      wx.showToast({
-        title: "待实现",
-        icon: "success",
-        duration: 1000
+      wx.navigateTo({
+        url: "../search/main"
       });
+      
     },
     //get mindmapList on main page
     getMindingMapList() {

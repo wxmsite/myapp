@@ -1,0 +1,39 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  .search_input {
+    width: auto;
+    height: 60rpx;
+    line-height: 70rpx;
+    margin: 20rpx 40rpx;
+    box-sizing: border-box;
+    border-radius: 30rpx;
+    border: 1px solid #ccc;
+    font-size: 25rpx;
+    text-align: center;
+    color: #4c4444;
+  }
+  .recommend {
+    position: relative;
+    margin-top: 20rpx;
+    left: 20rpx;
+    .recommend_title {
+      font-size: 32rpx;
+      color: #2b2929;
+    }
+    .recommend_content {
+      display: inline-block;
+      padding: 10rpx 20rpx;
+      margin: 30rpx 30rpx 0 0;
+      border: 1px solid #ccc;
+      border-radius: 5rpx;
+      color: #808080;
+      white-space: wrap;
+      font-size: 24rpx;
+    }
+  }
+  .content {
+    position: relative;
+    margin-top: 80rpx;
+  }
+}

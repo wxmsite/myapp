@@ -1,7 +1,7 @@
 <template>
   <view class="mindmap" @click="getBook">
     <view class="card-thum">
-      <img src="../../static/images/like.svg">
+      <img class="thum_img" src="../../static/images/example.jpg">
     </view>
     <view class="card-name">
       <view class="title">{{book.title}}</view>
@@ -36,13 +36,15 @@ export default {
   methods: {
     getBook() {},
     download() {
-      console.log("https://6d79-myapp-046e4f-1259071453.tcb.qcloud.la/" +
-          this.book.imgName)
       wx.downloadFile({
         url:
           "https://6d79-myapp-046e4f-1259071453.tcb.qcloud.la/" +
           this.book.imgName,
         success: function(res) {
+          wx.showToast({
+            title: "后台下载中",
+            duration: 1000
+          });
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
           if (res.statusCode === 200) {
             var tempFilePaths = res.tempFilePath;
@@ -115,11 +117,13 @@ export default {
   margin-bottom: 20px;
   border-bottom: 1px solid rgb(240, 230, 230);
   .card-thum {
-    display: flex;
-    align-items: center;
-    width: 120rpx;
-    height: 120px;
-    margin-left: 20rpx;
+    flex: 0 0 auto;
+    .thum_img {
+      align-items: center;
+      width: 240rpx;
+      height: 120px;
+      margin-left: 20rpx;
+    }
   }
   .card-name {
     display: flex;
@@ -145,7 +149,7 @@ export default {
         width: 40rpx;
         height: 40rpx;
         display: inline-block;
-        padding-left: 20rpx;
+        padding-left: 25rpx;
       }
     }
   }

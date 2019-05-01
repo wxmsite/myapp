@@ -5,7 +5,8 @@
     "pages/logs/main",
     "pages/counter/main",
     "pages/explanation/main",
-    "pages/problem/main"
+    "pages/problem/main",
+    "pages/search/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

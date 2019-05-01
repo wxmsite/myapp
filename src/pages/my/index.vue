@@ -58,9 +58,9 @@
         <span class="menu-item-content">意见反馈</span>
       </view>
     </view>
-    <view>
+    <!-- <view>
       <button class @click="logout">退出登录</button>
-    </view>
+    </view> -->
   </view>
 </template>
 

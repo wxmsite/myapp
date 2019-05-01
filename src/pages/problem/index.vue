@@ -16,6 +16,7 @@ export default {
     return {
       problemList: [
         { value: "登陆时闪烁"},
+        { value: "搜索只支持搜索书名，不支持检索"},
         { value: "首页缩略图问题" },
         { value: "更多功能待开发" },
         { value: "界面UI待优化" }
